@@ -14,13 +14,13 @@ searchterm="/book?day=2223&services%5B%5D=1&time=50400&view=bare"
 email="alec.ditonto@gmail.com"
 # flag file -- used to determine if the script ever ran successfully
 flag="tmp/flag.txt"
-# var used to determine if this should repeatedly send emails
+# var used to determine if this should repeatedly send emails despite the flag
 repeat=true
 
 if [ ! -f $flag ] || [ $repeat ]
   then
     
-    echo "Retrieving web data from: http://bhldnbeverlyhills.fullslate.com/services/1?start=2218&view=bare ..."
+    echo "Retrieving web data from:" $url
     
     # get ther URL content
     content="$(curl -s "$url")"
@@ -46,7 +46,7 @@ if [ ! -f $flag ] || [ $repeat ]
         echo "Date found at http://bhldnbeverlyhills.fullslate.com/services/1?start=2218&view=bare"> $message 
         
         #send the email
-        $(mail -s "date found" alec.ditonto@gmail.com < $message)
+        #$(mail -s "date found" "alec.ditonto@gmail.com "< $message)
         
         echo "Email sent..."
       else
