@@ -8,9 +8,9 @@ clear # clean things up a bit
 # this is the URL that will be tested against
 url="http://bhldnbeverlyhills.fullslate.com/services/1?start=2218&view=bare"
 # this is the term that will be searched for
-searchterms=( "/book?day=2225" "/book?day=2226" )
+searchterms=( "/book?day=2229" "/book?day=2226" )
 # email that notification is sent to
-email="alec.ditonto@gmail.com"
+emails=( "alec.ditonto@gmail.com" "zimme.lau@gmail.com" )
 # flag file -- used to determine if the script ever ran successfully
 flag="tmp/flag.txt"
 # var used to determine if this should repeatedly send emails despite the flag
@@ -42,15 +42,17 @@ if [ ! -f $flag ] || [ $repeat ]
 
             #create the found doc so the script won't repeat itself  
             echo "flagged"> $flag
-            echo $i
+            
             #create a file to hold the email message and create the message
             message="tmp/message.txt"
             echo "Date found at http://bhldnbeverlyhills.fullslate.com/services/1?start=2218&view=bare" "$i"> $message 
             
-            #send the email
-            $(mail -s "date found" $email< $message)
-            
-            echo "Email sent..."
+            for email in "${emails[@]}"
+            do
+                #send the email
+                $(mail -s "date found" $email< $message)
+            done
+            echo "Email(s) sent..."
           else
             echo 'No date found...'
         fi
