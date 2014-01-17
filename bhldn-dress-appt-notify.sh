@@ -8,7 +8,7 @@ clear # clean things up a bit
 # this is the URL that will be tested against
 url="http://bhldnbeverlyhills.fullslate.com/services/1?start=2218&view=bare"
 # this is the term that will be searched for
-searchterms=( "/book?day=2229" "/book?day=2226" )
+searchterms=( "/book?day=2225" "/book?day=2226" )
 # email that notification is sent to
 emails=( "alec.ditonto@gmail.com" "zimme.lau@gmail.com" )
 # flag file -- used to determine if the script ever ran successfully
