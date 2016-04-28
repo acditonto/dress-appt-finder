@@ -17,9 +17,9 @@ urls=("http://bhldnbeverlyhills.fullslate.com/services/1?start=3070&view=bare" "
 # These are the terms that will be searched for
 searchterms=( "/book?day=3037" "/book?day=3038" "/book?day=3044" "/book?day=3045" "/book?day=3051" "/book?day=3052" "/book?day=3058" "/book?day=3059" "/book?day=3065" "/book?day=3066" "/book?day=3072" "/book?day=3073" "/book?day=3079" "/book?day=3080" "/book?day=3086" "/book?day=3087" "/book?day=3093" "/book?day=3094" "/book?day=3100" "/book?day=3101" )
 # These are the addresses that the email alerts are sent to
-emails=( "alec.ditonto@gmail.com" )
+emails=( "" )
 # flag file -- used to determine if the script ever ran successfully
-flag="/home/acdwebdev/appt-finder/tmp/flag.txt"
+flag="/home/appt-finder/tmp/flag.txt"
 # var used to determine if this should repeatedly send emails despite the flag
 repeat=0
 
@@ -33,7 +33,7 @@ if [ ! -f $flag ] || [ $repeat -eq 1 ];
         content="$(curl -s "$url")"
 
         # put content into text.txt file
-        echo "$content"> /home/acdwebdev/appt-finder/tmp/text.txt
+        echo "$content"> /home/appt-finder/tmp/text.txt
 
         echo "Analyzing results..."
 
@@ -41,7 +41,7 @@ if [ ! -f $flag ] || [ $repeat -eq 1 ];
         do
             echo $i
             #search for the search term
-            result=$(grep $i /home/acdwebdev/appt-finder/tmp/text.txt)
+            result=$(grep $i /home/appt-finder/tmp/text.txt)
 
             #check status of the grep command
             if [ $? -eq 0 ]
@@ -52,7 +52,7 @@ if [ ! -f $flag ] || [ $repeat -eq 1 ];
                 echo "flagged"> $flag
 
                 #create a file to hold the email message and create the message
-                message="/home/acdwebdev/appt-finder/tmp/message.txt"
+                message="/home/appt-finder/tmp/message.txt"
                 echo "Date found at " "$url" "$i" "book right away!"> $message
 
                 for email in "${emails[@]}"
