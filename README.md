@@ -37,3 +37,8 @@ Set up Password
 	$ sudo vim /etc/postfix/sasl/sasl_passwd
 	Add the following line
 		[smtp.gmail.com]:587 USERNAME@gmail.com:PASSWORD
+
+
+FOR DEBUGGING MAIL: 
+	tail -f /var/log/mail.log
+	echo "hello" | mail -s "test" alec.ditonto@gmail.com alec.ditonto@gmail.com
