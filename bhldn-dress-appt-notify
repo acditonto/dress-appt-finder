@@ -1,0 +1,64 @@
+#!/bin/bash
+# this script hits this URL http://bhldnbeverlyhills.fullslate.com/services/1?start=2218&view=bare
+# every minute to look for an opening on 2/8 or 2/9
+# days: 2225 | 2226
+
+clear # clean things up a bit
+
+# this is the URL that will be tested against
+urls=("http://bhldnbeverlyhills.fullslate.com/services/1?start=3070&view=bare" "http://bhldnbeverlyhills.fullslate.com/services/1?start=3060&view=bare" )
+# this is the term that will be searched for
+searchterms=( "/book?day=3037" "/book?day=3038" "/book?day=3044" "/book?day=3045" "/book?day=3051" "/book?day=3052" "/book?day=3058" "/book?day=3059" "/book?day=3065" "/book?day=3066" "/book?day=3072" "/book?day=3073" "/book?day=3079" "/book?day=3080" "/book?day=3086" "/book?day=3087" "/book?day=3093" "/book?day=3094" "/book?day=3100" "/book?day=3101" )
+# email that notification is sent to
+emails=( "alec.ditonto@gmail.com" )
+# flag file -- used to determine if the script ever ran successfully
+flag="/Users/ditonto/mortalkombat/dress-appt-finder/tmp/flag.txt"
+# var used to determine if this should repeatedly send emails despite the flag
+repeat=false
+
+if [ ! -f $flag ] || [ $repeat ]
+  then
+    
+    for url in "${urls[@]}"
+    do
+        echo "Retrieving web data from:" $url
+        # get ther URL content
+        content="$(curl -s "$url")"
+
+        # put content into text.txt file
+        echo "$content"> /Users/ditonto/mortalkombat/dress-appt-finder/tmp/text.txt
+
+        echo "Analyzing results..."
+
+        for i in "${searchterms[@]}"
+        do
+            echo $i
+            #search for the search term
+            result=$(grep $i /Users/ditonto/mortalkombat/dress-appt-finder/tmp/text.txt)
+
+            #check status of the grep command
+            if [ $? -eq 0 ]
+              then
+                echo "Date found..."
+
+                #create the found doc so the script won't repeat itself  
+                echo "flagged"> $flag
+                
+                #create a file to hold the email message and create the message
+                message="/Users/ditonto/mortalkombat/dress-appt-finder/tmp/message.txt"
+                echo "Date found at " "$url" "$i" "book right away!"> $message 
+                
+                for email in "${emails[@]}"
+                do
+                    #send the email
+                    $(mail -s "BHLDN Date Found" $email< $message)
+                done
+                echo "Email(s) sent..."
+              else
+                echo 'No date found...'
+            fi
+        done
+    done
+  else
+    echo "File found. Terminating..."
+fi
