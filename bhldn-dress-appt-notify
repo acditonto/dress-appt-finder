@@ -8,14 +8,15 @@
 # NOTE: for the script to run repeatedly -- set up a cron (OR WRAP IN A LOOP)
 # NOTE: for crons to work, file paths must be explciti "~/" & relative URLS won't likely work
 # TODO: abstract file paths to vars; play with storing search terms, URLS and Emails in CSV for easy config, reduce Big O of all dem for loops
+# 11/12 11/13 11/19 11/20
 #
 
 clear # clean things up a bit
 
 # these are the URLs that will be tested against
-urls=("http://bhldnbeverlyhills.fullslate.com/services/1?start=3070&view=bare" "http://bhldnbeverlyhills.fullslate.com/services/1?start=3060&view=bare" )
+urls=( "https://bhldnwalnutcreek.fullslate.com/services/1?start=3191&view=bare" "https://bhldnwalnutcreek.fullslate.com/services/1?start=3222&view=bare" )
 # These are the terms that will be searched for
-searchterms=( "/book?day=3037" "/book?day=3038" "/book?day=3044" "/book?day=3045" "/book?day=3051" "/book?day=3052" "/book?day=3058" "/book?day=3059" "/book?day=3065" "/book?day=3066" "/book?day=3072" "/book?day=3073" "/book?day=3079" "/book?day=3080" "/book?day=3086" "/book?day=3087" "/book?day=3093" "/book?day=3094" "/book?day=3100" "/book?day=3101" )
+searchterms=( "/book?day=3219" "/book?day=3220" "/book?day=3233" "/book?day=3234" "/book?day=3240" "/book?day=3241" )
 # These are the addresses that the email alerts are sent to
 emails=( "" )
 # flag file -- used to determine if the script ever ran successfully
